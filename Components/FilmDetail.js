@@ -1,12 +1,74 @@
 import React from 'react'
-import { StyleSheet, View, Text} from 'react-native'
+import { StyleSheet, View, Text, Image, ActivityIndicator, ScrollView} from 'react-native'
+
+import {getFilmDetailFromApi} from '../API/TMDBApi'
+import {getImageFromApi} from '../API/TMDBApi'
+
+import moment from 'moment'
+import numeral from 'numeral'
 
 class FilmDetail extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      film: undefined,
+      isLoading: true
+    }
+  }
+
+  _displayLoading() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loading_container}>
+          <ActivityIndicator size='large' />
+        </View>
+      )
+    }
+  }
+
+  componentDidMount(){
+    getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
+      this.setState({
+        film : data,
+        isLoading : false
+      })
+    })
+  }
+
+  _displayFilm() {
+    const {film} = this.state
+    if (this.state.film != undefined) {
+      return (
+        <ScrollView style={styles.scrollview_container}>
+          <Image
+            style ={styles.image}
+            source={{uri: getImageFromApi(film.backdrop_path)}}/>
+          <Text style = {styles.title_text}>{film.title}</Text>
+          <Text style = {styles.overview_text}>{film.overview}</Text>
+          <Text style = {styles.default_text}>Sorti le {moment(new Date(film.release_date)).format('DD/MM/YYYY')}</Text>
+          <Text style = {styles.default_text}>Note : {film.vote_average}/10</Text>
+          <Text style = {styles.default_text}>Nombres de vote : {film.vote_count}</Text>
+          <Text style = {styles.default_text}>Budget : {numeral(film.budget).format('0,0[.]00 $')} $</Text>
+          <Text style = {styles.default_text}>Genre(s) : {film.genres.map(function(genre){
+            return genre.name
+          }).join(" / ")}
+          </Text>
+          <Text style = {styles.default_text}>Companie(s) : {film.production_companies.map(function(company){
+            return company.name
+          }).join(" / ")}
+          </Text>
+        </ScrollView>
+      )
+    }
+  }
+
   render() {
     return (
       <View style={styles.main_container}>
-        <Text>Détail du film</Text>
+        {this._displayLoading()}
+        {this._displayFilm()}
       </View>
+
     )
   }
 }
@@ -14,7 +76,39 @@ class FilmDetail extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-  }
+    padding : 5
+  },
+  loading_container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor : 'white',
+    opacity : 0.5
+  },
+  image : {
+    justifyContent : 'center',
+    height: 180
+  },
+  title_text : {
+    textAlign : 'center',
+    fontWeight: 'bold',
+    marginTop : 10,
+    marginBottom : 10,
+    fontSize : 30
+  },
+  overview_text : {
+    fontSize : 14,
+    fontStyle : 'italic',
+    marginBottom : 10
+  },
+  default_text:{
+    fontSize : 14,
+    fontWeight : 'bold'
+    }
 })
 
 export default FilmDetail
