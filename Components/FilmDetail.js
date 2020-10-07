@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   favorite_image : {
     width: 40,
     height: 40
-  }
+  },
   overview_text : {
     fontSize : 14,
     fontStyle : 'italic',
