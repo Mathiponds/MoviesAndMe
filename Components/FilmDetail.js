@@ -62,7 +62,6 @@ class FilmDetail extends React.Component {
 
   _displayFilm() {
     const {film} = this.state
-    //console.log(this.props)
     if (this.state.film != undefined) {
       return (
         <ScrollView style={styles.scrollview_container}>

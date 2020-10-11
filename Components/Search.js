@@ -57,10 +57,11 @@ class Search extends React.Component {
   }
 
   _displayDetailForFilm = (idFilm) => {
-    this.props.navigation.navigate("FilmDetail", {idFilm : idFilm})
+    this.props.navigation.navigate('FilmDetail', {idFilm : idFilm})
   }
 
   render(){
+    console.log(this.props.navigation)
     return (
       <View style = {styles.main_container}>
         <TextInput
@@ -72,6 +73,10 @@ class Search extends React.Component {
         <Button
           title= 'Rechercher'
           onPress = {()=> {this._searchFilms()}}
+        />
+        <Button
+          title= 'Go'
+          onPress = {()=> {this.props.navigation.navigate("FilmDetail", {idFilm : 11})}}
         />
         <FlatList
           data={this.state.films}

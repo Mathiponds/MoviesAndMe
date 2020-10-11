@@ -1,11 +1,19 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, View, Text, Button } from 'react-native'
 
 class Favorites extends React.Component {
 
   render() {
     return (
-      <Text>Mes Favoris</Text>
+      <View>
+        <Text>Mes Favoris</Text>
+        <Button
+          title= 'Go'
+          onPress = {()=> {
+            this.props.navigation.navigate("FilmDetail")}}
+
+        />
+      </View>
     )
   }
 }
