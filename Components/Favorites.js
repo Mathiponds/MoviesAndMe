@@ -10,7 +10,7 @@ class Favorites extends React.Component {
         <Button
           title= 'Go'
           onPress = {()=> {
-            this.props.navigation.navigate("FilmDetail")}}
+            this.props.navigation.push("FilmDetail", {filmId : 11})}}
 
         />
       </View>

@@ -19,13 +19,26 @@ function MySearchStackNavigator(){
   )
 }
 
+const FavoriteStackNavigator = createStackNavigator()
+
+function MyFavoriteStackNavigator(){
+  return(
+    <FavoriteStackNavigator.Navigator>
+      <FavoriteStackNavigator.Screen name = "Favorites" component={Favorites}/>
+      <FavoriteStackNavigator.Screen name = "FilmDetail" component={FilmDetail}/>
+    </FavoriteStackNavigator.Navigator>
+  )
+}
+
+
 const MoviesTabNavigator = createBottomTabNavigator()
 
 function MyMoviesTabNavigator(){
   return (
     <MoviesTabNavigator.Navigator tabBarOptions={{
+        activeBackgroundColor : '#DDDDDD',
+        inactiveBackgroundColor : '#FFFFFF',
         showLabel : false,
-        activeTintColor: '#e91e63',
       }}>
       <MoviesTabNavigator.Screen name = "Search" component={MySearchStackNavigator}
        options= {{
@@ -39,7 +52,7 @@ function MyMoviesTabNavigator(){
           )
         }}
       />
-      <MoviesTabNavigator.Screen name = "Favorites" component={Favorites}
+      <MoviesTabNavigator.Screen name = "Favorites" component={MyFavoriteStackNavigator}
       options= {{
        tabBarIcon : () => (
          <View>
