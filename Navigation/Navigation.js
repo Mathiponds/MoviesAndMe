@@ -1,4 +1,5 @@
 import React from 'react'
+import {View, Image,StyleSheet} from 'react-native'
 
 import {createStackNavigator} from '@react-navigation/stack'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -12,7 +13,7 @@ const SearchStackNavigator = createStackNavigator()
 function MySearchStackNavigator(){
   return(
     <SearchStackNavigator.Navigator>
-      <SearchStackNavigator.Screen name = "Favorites" component={Favorites}/>
+      <SearchStackNavigator.Screen name = "Search" component={Search}/>
       <SearchStackNavigator.Screen name = "FilmDetail" component={FilmDetail}/>
     </SearchStackNavigator.Navigator>
   )
@@ -22,11 +23,42 @@ const MoviesTabNavigator = createBottomTabNavigator()
 
 function MyMoviesTabNavigator(){
   return (
-    <MoviesTabNavigator.Navigator initialRouteName='Search'>
-      <MoviesTabNavigator.Screen name = "Search" component={MySearchStackNavigator}/>
-      <MoviesTabNavigator.Screen name = "Favorites" component={Favorites}/>
+    <MoviesTabNavigator.Navigator tabBarOptions={{
+        showLabel : false,
+        activeTintColor: '#e91e63',
+      }}>
+      <MoviesTabNavigator.Screen name = "Search" component={MySearchStackNavigator}
+       options= {{
+        tabBarIcon : () => (
+          <View>
+            <Image
+              resizeMode = 'contain'
+              style={styles.favorite_image}
+              source={require('../Images/search.png')}/>
+          </View>
+          )
+        }}
+      />
+      <MoviesTabNavigator.Screen name = "Favorites" component={Favorites}
+      options= {{
+       tabBarIcon : () => (
+         <View>
+           <Image
+              resizeMode = 'contain'
+             style={styles.favorite_image}
+             source={require('../Images/coeur_plein.png')}/>
+         </View>
+         )
+       }}
+      />
     </MoviesTabNavigator.Navigator>
   )
 }
 
-export default MySearchStackNavigator
+const styles = StyleSheet.create({
+  favorite_image : {
+    margin : 10,
+    height : 40
+  }
+})
+export default MyMoviesTabNavigator

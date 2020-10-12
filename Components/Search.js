@@ -74,10 +74,6 @@ class Search extends React.Component {
           title= 'Rechercher'
           onPress = {()=> {this._searchFilms()}}
         />
-        <Button
-          title= 'Go'
-          onPress = {()=> {this.props.navigation.navigate("FilmDetail", {idFilm : 11})}}
-        />
         <FlatList
           data={this.state.films}
           extraData = {this.props.favoritesFilm}
