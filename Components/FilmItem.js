@@ -3,6 +3,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native'
 import { getImageFromApi } from '../API/TMDBApi'
+import FadeIn from '../Animations/FadeIn'
 
 class FilmItem extends React.Component {
   _displayFavorite(){
@@ -17,24 +18,26 @@ class FilmItem extends React.Component {
   render() {
     const { film, displayDetailForFilm } = this.props
     return (
-      <TouchableOpacity
-       style={styles.main_container}
-       onPress={() => displayDetailForFilm(film.id)}>
-        <View style = {styles.image_container}>
-          <Image
-            style ={styles.image}
-            source={{uri: getImageFromApi(film.poster_path)}}/>
-        </View>
-        <View style= {styles.content_part}>
-          <View style = {styles.header_container}>
-            {this._displayFavorite()}
-            <Text style = {styles.title_text}> {film.title}</Text>
-            <Text style = {styles.vote_text}> {film.vote_average}</Text>
+      <FadeIn>
+        <TouchableOpacity
+         style={styles.main_container}
+         onPress={() => displayDetailForFilm(film.id)}>
+          <View style = {styles.image_container}>
+            <Image
+              style ={styles.image}
+              source={{uri: getImageFromApi(film.poster_path)}}/>
           </View>
-          <Text style = {styles.description_text} numberOfLines={6}> {film.overview}</Text>
-          <Text style = {styles.footer_part}>Sorti le {film.release_date}</Text>
-        </View>
-      </TouchableOpacity>
+          <View style= {styles.content_part}>
+            <View style = {styles.header_container}>
+              {this._displayFavorite()}
+              <Text style = {styles.title_text}> {film.title}</Text>
+              <Text style = {styles.vote_text}> {film.vote_average}</Text>
+            </View>
+            <Text style = {styles.description_text} numberOfLines={6}> {film.overview}</Text>
+            <Text style = {styles.footer_part}>Sorti le {film.release_date}</Text>
+          </View>
+        </TouchableOpacity>
+      </FadeIn>
     )
   }
 }
