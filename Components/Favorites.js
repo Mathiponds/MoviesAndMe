@@ -5,7 +5,6 @@ import FilmList from '../Components/FilmList'
 import { connect } from 'react-redux'
 
 class Favorites extends React.Component {
-
   render() {
     return (
       <FilmList
